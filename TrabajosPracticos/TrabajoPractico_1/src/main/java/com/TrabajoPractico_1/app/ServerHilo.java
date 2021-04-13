@@ -20,6 +20,7 @@ public class ServerHilo implements Runnable {
         // imaginando un proceso que lleva tiempo
         try {
             BufferedReader canalEntrada = new BufferedReader(new InputStreamReader(this.client.getInputStream()));
+            System.out.println(canalEntrada.readLine());
             PrintWriter canalSalida = new PrintWriter(this.client.getOutputStream(), true);
             Thread.sleep(2000);
             canalSalida.println("el_server_responde");

@@ -54,7 +54,7 @@
           <configuration>
 		    <archive>
 			  <manifest>
-				<mainClass>com.roufid.tutorials.AppTest</mainClass>
+				<mainClass>com.TrabajoPractico_1.app.Client</mainClass>
 			  </manifest>
 			</archive>
 		</configuration>
