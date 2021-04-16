@@ -1,0 +1,5 @@
+FROM openjdk:latest
+WORKDIR /usr/src/
+COPY Server.jar .
+EXPOSE 9090/udp
+ENTRYPOINT ["java", "-jar", "Server.jar"]

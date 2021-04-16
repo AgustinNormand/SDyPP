@@ -28,8 +28,6 @@ public class ServerHilo implements Runnable {
         }catch (Exception e){
 
         }
-
-
     }
 }
 
