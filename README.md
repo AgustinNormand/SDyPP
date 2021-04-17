@@ -2,6 +2,6 @@
 
 <p align="center">
 
-Repositorio destinado para la entregar los trabajos prácticos y el trabajo práctico integrador de SDyPP, UNLu.
+Repositorio destinado para la entrega de los trabajos prácticos y el trabajo práctico integrador de la materia SDyPP, UNLu.
 
 </p>
