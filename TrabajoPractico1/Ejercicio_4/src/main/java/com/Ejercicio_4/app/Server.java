@@ -23,6 +23,10 @@ public class Server {
         public static void main(String[] args)
         {
             int port = 9090;
+            if(args.length == 1) {
+            	System.out.println("Setting java.rmi.server.hostname to "+args[0]);
+            	System.setProperty("java.rmi.server.hostname", args[0]);
+            }
             new Server(port);
         }
 }

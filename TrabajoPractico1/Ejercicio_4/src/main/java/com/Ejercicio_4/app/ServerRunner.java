@@ -8,6 +8,8 @@ import java.net.URL;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import org.json.JSONObject;
+
 import com.maxmind.geoip2.WebServiceClient;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.model.CountryResponse;
@@ -39,13 +41,18 @@ public class ServerRunner implements RemoteInt, Remote{
 	}
 	
 	public String getLocationOfIp() {
-		try (WebServiceClient client = new WebServiceClient.Builder(539078, "5FVqmB9eWrRnJviN").host("geolite.info").build()) {
+		try {
+			WebServiceClient client = 
+					new WebServiceClient
+					.Builder(539078, "5FVqmB9eWrRnJviN")
+					.host("geolite.info")
+					.build();
 
 		    InetAddress ipAddress = InetAddress.getByName(getPublicIP());
 
-		    // Do the lookup
 		    CityResponse response = client.city(ipAddress);
-		    return response.getMostSpecificSubdivision().getName();
+		    
+		    return response.getLocation().getLatitude() + "," + response.getLocation().getLongitude();
 		    } catch (Exception e) {
 		    	e.printStackTrace();
 		    }
@@ -55,10 +62,32 @@ public class ServerRunner implements RemoteInt, Remote{
   @Override
   public String getWeather() throws RemoteException {
 		try {
-			return "The weather in "+getLocationOfIp()+" is Cloudy."; // Está la localización, falta el wheather.
+			//return "The weather in "+getLocationOfIp()+" is Cloudy."; // Está la localización, falta el wheather.
+			String LatitudeLongitude = getLocationOfIp();
+			return getWeatherOfLatitudeLongitude(LatitudeLongitude);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "Error";
   }
+
+private String getWeatherOfLatitudeLongitude(String latitudeLongitude) {
+	String key = "AGRN2JTPDLE77BYSCQK4R6A7B";
+	String url = "https://weather.visualcrossing.com"
+			+ "/VisualCrossingWebServices/rest/"
+			+ "services/timeline/"
+			+latitudeLongitude
+			+"?unitGroup=us&key="
+			+key;
+	
+	try {
+		JSONObject jo = new JSONObject(getHTML(url));
+		String locationName = (String) jo.get("timezone");
+		String weather = (String) jo.get("description");
+		return "Weather in "+locationName+": "+weather;
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return null;
+}
 }
