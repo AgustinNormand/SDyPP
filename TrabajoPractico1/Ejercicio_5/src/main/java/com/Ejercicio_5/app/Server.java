@@ -1,4 +1,4 @@
-package com.Ejercicio_4.app;
+package com.Ejercicio_5.app;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

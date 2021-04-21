@@ -1,4 +1,4 @@
-package com.Ejercicio_4.app;
+package com.Ejercicio_5.app;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -25,8 +25,7 @@ public class Client {
     public static void main( String[] args )
     {
         int port = 9090;
-        //String ip = "127.0.0.1"; //THIS IS ORIGINAL
-        String ip = "192.168.0.3";
+        String ip = "127.0.0.1";
         if(args.length == 1)
         	ip = args[0];
         new Client(port, ip);
