@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 import com.maxmind.geoip2.WebServiceClient;
 import com.maxmind.geoip2.model.CityResponse;
-import com.maxmind.geoip2.model.CountryResponse;
 
 
 public class ServerRunner implements RemoteInt, Remote{
