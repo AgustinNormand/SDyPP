@@ -1,7 +1,10 @@
 package com.Ejercicio_7.app;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
@@ -20,21 +23,32 @@ public class Client {
             }
             RemoteInt ri = (RemoteInt) clientRMI.lookup("TaskProcessorServer");
             
-            Tarea task = new Fibonacci(2500);
+            Tarea task = new Fibonacci(25);
             
-            Tarea tasks[] = new Tarea[]{new Fibonacci(5), new RandomGenerator(100000)};
+            Tarea task2 = new RandomGenerator(100000);
             
-            //Tarea task2 = new RandomGenerator();
+            System.out.println("Resultado Fibonacci: "+sendTask(ri, task));
             
-            String jsonTask = gson.toJson(task);
-            System.out.println(jsonTask);
-            System.out.println(ri.processTask(jsonTask));
-
+            System.out.println("Resultado Random: "+sendTask(ri, task2));
             
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+    
+    private String sendTask(RemoteInt ri, Tarea task) {
+    	String jsonTask = gson.toJson(task);
+        JSONObject obj = new JSONObject(jsonTask);
+        String className = task.getClass().toString().split("class ")[1];
+        obj.put("class", className);
+        
+        try {
+			return ri.processTask(obj.toString());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return "";
     }
 
     public static void main( String[] args )
