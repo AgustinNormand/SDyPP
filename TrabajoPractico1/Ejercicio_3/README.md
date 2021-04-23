@@ -1,7 +1,10 @@
-Moverse al directorio donde se encuentra el Dockerfile: cd Server
+##Servidor:
+<ul>
+<li>docker run -p 9090:9090/tcp agustinnormand/tp1_ej3_server</li>
+</ul>
 
-Construir imagen de docker con el comando: docker build -t agustinnormand/tp1_ej3_server .
-
-Correr servidor con el comando: docker run -p 9090:9090/tcp agustinnormand/tp1_ej3_server
-
-Realizar una petición como cliente con el comando: nc localhost 9090
+##Cliente:
+<ul>
+<li>nc localhost 9090</li>
+<li>Registrarse / Logearse y enviar un mensaje siguiendo las opciones.</li>
+</ul>

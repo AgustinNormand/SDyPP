@@ -1,7 +1,10 @@
-Moverse al directorio donde se encuentra el Dockerfile: cd Server
+##Servidor:
+<ul>
+<li>docker run -p 9090:9090/udp agustinnormand/tp1_ej1_udp_server</li>
+</ul>
 
-Construir imagen de docker con el comando: docker build -t agustinnormand/tp1_ejudp_server .
-
-Correr servidor con el comando: docker run -p 9090:9090/udp agustinnormand/tp1_ejudp_server
-
-Realizar una petición como cliente con el comando: nc -u localhost 9090
+##Cliente:
+<ul>
+<li>nc -u localhost 9090</li>
+<li>Escribir un mensaje y presionar "Enter"</li>
+</ul>

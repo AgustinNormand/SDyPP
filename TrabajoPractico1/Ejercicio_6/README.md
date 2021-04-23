@@ -1,11 +1,10 @@
-Server:
-Open ports 9090, 6666
-docker run -p 9090:9090 -p 6666:6666 -d agustinnormand/tp1_ej5_server PUBLIC_ACCESIBLE_IP_OF_SERVER
+##Servidor:
+<ul>
+<li>Open ports 9090, 6666</li>
+<li>docker run -p 9090:9090 -p 6666:6666 -d agustinnormand/tp1_ej6_server PUBLIC_ACCESIBLE_IP_OF_SERVER</li>
+</ul>
 
-Client:
-docker run agustinnormand/tp1_ej5_client PUBLIC_ACCESIBLE_IP_OF_SERVER
-
-My Example:
-ssh 35.184.193.242
-docker run -p 9090:9090 -p 6666:6666 -d agustinnormand/tp1_ej5_server 35.184.193.242
-docker run agustinnormand/tp1_ej5_client 35.184.193.242
+##Cliente:
+<ul>
+<li>docker run agustinnormand/tp1_ej6_client PUBLIC_ACCESIBLE_IP_OF_SERVER</li>
+</ul>
