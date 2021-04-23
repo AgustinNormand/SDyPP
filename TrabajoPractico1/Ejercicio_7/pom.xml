@@ -67,7 +67,7 @@
 					<configuration>
 						<archive>
 							<manifest>
-								<mainClass>com.Ejercicio_6.app.Server</mainClass>
+								<mainClass>com.Ejercicio_7.app.Server</mainClass>
 							</manifest>
 						</archive>
 					</configuration>
