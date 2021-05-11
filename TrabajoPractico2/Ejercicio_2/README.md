@@ -1,5 +1,5 @@
 ## Servidor:
-* docker run -p 9090:9090 -d agustinnormand/tp2_ej2a_server
+* docker run -p 8080:8080 -d agustinnormand/tp2_ej2a_server
 
 ## Cliente (Postman):
 * Realizar un deposito de 100$ a la cuenta 1: SERVER_IP:8080/deposit/1/100
