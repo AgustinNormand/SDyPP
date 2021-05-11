@@ -1,0 +1,11 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: master
+  cloud:
+    consul:
+      discovery:
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+      host: 192.168.0.62
+      port: 8500

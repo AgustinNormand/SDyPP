@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: endpoint
+  cloud:
+    consul:
+      discovery:
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        prefer-ip-address: true
+        register: true
+      host: consul-server
+      port: 8500

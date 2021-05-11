@@ -1,0 +1,14 @@
+upstream backend {
+least_conn;
+{{ range service "master" }}
+  server {{ .Address }}:{{ .Port }};
+{{ end }}
+}
+
+server {
+   listen 80;
+
+   location / {
+      proxy_pass http://backend;
+   }
+}

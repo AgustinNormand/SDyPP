@@ -1,10 +1,10 @@
-package com.trabajoPractico2.Ejercicio1;
+package com.TrabajoPractico2.Ejercicio1_Master;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Ejercicio1ApplicationTests {
+class Ejercicio1MasterApplicationTests {
 
 	@Test
 	void contextLoads() {
