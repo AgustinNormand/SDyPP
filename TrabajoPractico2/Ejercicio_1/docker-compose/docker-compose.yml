@@ -7,7 +7,7 @@ services:
       - '8500:8500'
       - '8600:8600/tcp'
       - '8600:8600/udp'
-    
+
   consul-template:
     image: hashicorp/consul-template:alpine
     volumes:
@@ -16,7 +16,7 @@ services:
     command: -consul-addr=consul-server:8500 -template=/opt/load-balancer.conf.ctmpl:/consul-template/data/load-balancer.conf
     depends_on:
       - consul
-      
+
   masterLoadbalancer:
     image: nginx:stable-alpine
     restart: always
@@ -26,17 +26,36 @@ services:
       - '80:80'
     depends_on:
       - consul
-      
+
   master1:
     image: agustinnormand/tp2_ej1_master
+
     ports:
       - '9090:9090'
     depends_on:
       - consul
-      
+
   master2:
     image: agustinnormand/tp2_ej1_master
     ports:
       - '9091:9090'
+    depends_on:
+      - consul
+
+  endpoint1:
+    image: agustinnormand/tp2_ej1_endpoint
+    volumes:
+      - /home/agustin/Desktop/Distribuidos/Repo_Propio/TrabajoPractico2/Ejercicio_1/docker-compose/DirectoryWithSharedFiles/EndpointA:/usr/src/shared/
+    ports:
+      - '8080:8080'
+    depends_on:
+      - consul
+
+  endpoint2:
+    image: agustinnormand/tp2_ej1_endpoint
+    volumes:
+      - /home/agustin/Desktop/Distribuidos/Repo_Propio/TrabajoPractico2/Ejercicio_1/docker-compose/DirectoryWithSharedFiles/EndpointA:/usr/src/shared/
+    ports:
+      - '8081:8080'
     depends_on:
       - consul
