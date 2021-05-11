@@ -6,11 +6,14 @@
 
 
 ## Funcionamiento Masters:
-* Obtener los endpoints que estan actualmente disponibles: curl MASTER_IP/endpoints
+* Obtener los endpoints que estan actualmente disponibles: curl MASTER_IP:PORT/endpoints
 
 ## Funcionamiento Endpoints:
-* Obtener archivos que está compartiendo un endpoint: curl ENDPOINT_IP/files
-* Solicitarle a un endpoint que obtenga un archivo: curl ENDPOINT_IP/requestFile/NOMBRE_DEL_ARCHIVO
+* Obtener archivos que está compartiendo un endpoint: curl ENDPOINT_IP:PORT/files
+* Solicitarle a un endpoint que obtenga un archivo: curl ENDPOINT_IP:PORT/requestFile/NOMBRE_DEL_ARCHIVO
+
+## Nota:
+* Si se trata de un entorno local MASTER_IP y ENDPOINT_IP van a ser 127.0.0.1, y lo que diferenciará a cada servicio van a ser los numeros de puerto.
 
 
 
