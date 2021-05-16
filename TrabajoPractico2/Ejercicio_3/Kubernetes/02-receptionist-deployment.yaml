@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receptionist
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: receptionist
+  template:
+    metadata:
+      labels:
+        role: receptionist
+    spec:
+      containers:
+      - name: receptionist
+        image: agustinnormand/tp2_ej3_receptionist:0.5
+        imagePullPolicy: IfNotPresent        
+        ports:
+        - containerPort: 9090
+        # resources:
+        #   requests:
+        #     memory: "64Mi"
+        #     cpu: "100m"
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"

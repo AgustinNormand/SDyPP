@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+    host: rabbitmq-service #192.168.0.62 #rabbitmq-service
+    password: guest
+    username: guest
+server:
+    port: 8080

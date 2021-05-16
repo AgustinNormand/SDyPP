@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit
+spec:
+  ports:
+  - name: http
+    port: 15672
+    protocol: TCP
+    targetPort: 15672
+  - name: web
+    port: 15692
+    protocol: TCP
+    targetPort: 15692
+  - name: amqp
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  selector:
+    role: rabbit 
+
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+  # name: rabbitmq-config
+# data:
+  # enabled_plugins: |
+    # [rabbitmq_management,rabbitmq_peer_discovery_k8s,rabbitmq_prometheus].
+  # rabbitmq.conf: |
+    # loopback_users.guest = false
+
+
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   labels:
+#     component: rabbit
+#   name: rabbit
+# spec:
+#   endpoints:
+#   - interval: 10s
+#     port: web
+#   selector:
+#     matchLabels:
+#       component: rabbit
