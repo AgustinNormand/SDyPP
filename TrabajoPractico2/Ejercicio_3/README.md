@@ -4,13 +4,20 @@
 * Deployment de RabbitMQ.
 * Prometheus desplegado + Prometheus Adapter + Grafana.
 * HPA Custom con profundidad de cola de RabbitMQ.
+* LivenessProbe y ReadinessProbe. Video demostrativo: https://youtu.be/KrVg8z8RMQg
 
 ## Deployment:
-* TO-DO.
+* kubectl apply -f Kubernetes/Prometheus/setup
+* kubectl apply -f Kubernetes/Prometheus/
+* kubectl apply -f Kubernetes/HPA-Custom/
+* kubectl apply -f Kubernetes/
 
 ## TO-DO:
 * Deployment con Request y Limite de CPU y Memoria.
-* Livenesprove y Readynesprove (Ya que spring tarda un toque en levantar, no esta bueno que mate al otro contenedor apenas pone a correr el nuevo, porque ahi la app tiene un  tiempo de downtime)
+
+## TO-FIX:
+* Los workers tiran error hasta que no se haga una petición a algun Receptionist de encolar un mensaje. Porque recién ahi es cuando se crea la cola a la que los workers están intentando acceder.
+* HPA cuando hace down-scale, pasa de 10 replicas a 1, debería hacerlo gradualmente.
 
 ## Ejemplo de funcionamiento: 
 * https://youtu.be/3eOQBZ9OjnA

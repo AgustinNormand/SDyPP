@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+
 @SpringBootApplication
 @RestController
 public class ReceptionistApplication {
@@ -32,6 +34,12 @@ public class ReceptionistApplication {
 	@Bean
 	public Queue myQueue() {
 		return new Queue("myQueue", false);
+	}
+	
+	@GetMapping("/health")
+	public String getHealth(){
+		//Timestamp tm = new Timestamp();
+		return "I'm healty! "+ new Timestamp(System.currentTimeMillis());
 	}
 
 }
