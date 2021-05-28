@@ -28,9 +28,13 @@ public class Ejercicio3Application {
 
 	private void loopProcessing(){
 		while(true){
-			Message message = rabbitTemplate.receive("myQueue");
-			if(message != null)
-				processMessage();
+			try {
+				Message message = rabbitTemplate.receive("myQueue");
+				if(message != null)
+					processMessage();
+			} catch (Exception e){
+				System.out.println("Se intentó obtener un mensaje pero la queue no fue creada todavía.");
+			}
 		}
 	}
 

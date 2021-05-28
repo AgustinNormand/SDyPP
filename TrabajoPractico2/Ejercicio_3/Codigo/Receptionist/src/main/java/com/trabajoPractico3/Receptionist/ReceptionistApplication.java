@@ -38,7 +38,6 @@ public class ReceptionistApplication {
 	
 	@GetMapping("/health")
 	public String getHealth(){
-		//Timestamp tm = new Timestamp();
 		return "I'm healty! "+ new Timestamp(System.currentTimeMillis());
 	}
 
