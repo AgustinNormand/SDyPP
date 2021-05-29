@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: receptionist
-        image: agustinnormand/tp2_ej3_receptionist:0.9
+        image: tp2_ej3_receptionist
         imagePullPolicy: IfNotPresent        
         ports:
         - containerPort: 9090
