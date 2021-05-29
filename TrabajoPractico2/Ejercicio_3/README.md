@@ -2,7 +2,7 @@
 * Creación de cluster en GKE con Terraform.
 * Deployment de Workers con tiempo de procesamiento simulado y con Request y Limite de CPU y Memoria.
 * Deployment de Receptionists + loadbalancer.
-* Deployment de RabbitMQ.
+* Deployment de RabbitMQ. 
 * Prometheus desplegado + Prometheus Adapter + Grafana.
 * HPA Custom con profundidad de cola de RabbitMQ. Video demostrativo: https://youtu.be/3eOQBZ9OjnA
 * LivenessProbe y ReadinessProbe. Video demostrativo: https://youtu.be/KrVg8z8RMQg
