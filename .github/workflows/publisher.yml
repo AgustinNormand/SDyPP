@@ -6,8 +6,9 @@ on:
     - 'TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/**'
     - 'TrabajoPractico2/Ejercicio_3/Docker/Receptionist/**'
 
-#defaults:
-#  run:
+defaults:
+  run:
+    working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
     
 
 jobs:
@@ -17,7 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
-        working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
@@ -38,10 +38,9 @@ jobs:
 
       - name: build and push Docker image
         uses: docker/build-push-action@v2
-        working-directory: TrabajoPractico2/Ejercicio_3/Docker/Receptionist/
         with:
           context: .
-          file: ./Dockerfile
+          file: ./TrabajoPractico2/Ejercicio_3/Docker/Receptionist/Dockerfile
           push: true
           tags: agustinnormand/tp2_ej3_receptionist:latest, agustinnormand/tp2_ej3_receptionist:${{ github.sha }}
         
