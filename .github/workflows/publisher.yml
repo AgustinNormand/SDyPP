@@ -55,12 +55,15 @@ jobs:
       uses: imranismail/setup-kustomize@v1
       with:
         kustomize-version: "3.6.1"
+    
+    - name: ls
+      run: ls -R
 
     - name: Update Kubernetes resources
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
-       cd ./TrabajoPractico2/Ejercicio_3/Kubernetes/kustomize/
+       cd ../../Kubernetes/kustomize/
        kustomize edit set image tp2_ej3_receptionist=$DOCKER_USERNAME/tp2_ej3_receptionist:$GITHUB_SHA
        cat kustomization.yaml
         
