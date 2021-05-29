@@ -6,9 +6,9 @@ on:
     - 'TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/**'
     - 'TrabajoPractico2/Ejercicio_3/Docker/Receptionist/**'
 
-defaults:
-  run:
-    working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
+#defaults:
+#  run:
+    
 
 jobs:
   build:
@@ -17,14 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
+        working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
           java-version: 15
       - name: Build with Maven
+        working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
         run:
           mvn clean package --file pom.xml
       - name: ls
+        working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
         run: ls -R
  
       - name: Login to DockerHub
