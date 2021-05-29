@@ -6,3 +6,5 @@ resources:
 namespace: default
 images:
 - name: tp2_ej3_receptionist
+  newName: agustinnormand/tp2_ej3_receptionist
+  newTag: e4853153c7de1d8345e50fad53600dde8cca1a28
