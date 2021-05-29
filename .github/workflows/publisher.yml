@@ -28,7 +28,7 @@ jobs:
       - name: ls
         run: ls -R
       - name: ls
-        run: mv ./target/Receptionist-0.0.1-SNAPSHOT.jar /TrabajoPractico2/Ejercicio_3/Docker/Receptionist/Dockerfile/Receptionist.jar
+        run: mv ./target/Receptionist-0.0.1-SNAPSHOT.jar /TrabajoPractico2/Ejercicio_3/Docker/Receptionist/Receptionist.jar
  
       - name: Login to DockerHub
         uses: docker/login-action@v1
