@@ -43,7 +43,7 @@ jobs:
       - name: build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: /TrabajoPractico2/Ejercicio_3/Docker/Receptionist/
           file: ./TrabajoPractico2/Ejercicio_3/Docker/Receptionist/Dockerfile
           push: true
           tags: agustinnormand/tp2_ej3_receptionist:latest, agustinnormand/tp2_ej3_receptionist:${{ github.sha }}
