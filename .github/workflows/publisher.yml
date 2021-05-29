@@ -34,8 +34,8 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: build and push Docker image
-        working-directory: TrabajoPractico2/Ejercicio_3/Docker/Receptionist/
         uses: docker/build-push-action@v2
+        working-directory: TrabajoPractico2/Ejercicio_3/Docker/Receptionist/
         with:
           context: .
           file: ./Dockerfile
