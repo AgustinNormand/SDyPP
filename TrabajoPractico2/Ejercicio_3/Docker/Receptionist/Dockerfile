@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM openjdk:latest 
 WORKDIR /usr/src/
 COPY Receptionist.jar .
 EXPOSE 9090
