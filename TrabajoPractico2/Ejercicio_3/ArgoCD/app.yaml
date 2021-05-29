@@ -8,13 +8,13 @@ spec:
   source:
     repoURL: https://github.com/AgustinNormand/SDyPP.git
     targetRevision: HEAD
-    path: TrabajoPractico2/Ejercicio_3/Kubernetes
+    path: TrabajoPractico2/Ejercicio_3/kustomize
     directory:
       recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: false
+  #syncPolicy:
+  #  automated:
+  #    prune: false
+  #    selfHeal: false
