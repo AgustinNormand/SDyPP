@@ -3,9 +3,8 @@ name: Publisher
 on:
   push:
     paths:
-    - '!TrabajoPractico1/**'
-    - '!TrabajoPractico2/**'
     - 'TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/**'
+    - 'TrabajoPractico2/Ejercicio_3/Docker/Receptionist/**'
 
 jobs:
   my-job:
