@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  admin.password: argocdpassword
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/name: example-argocd-cluster
+    app.kubernetes.io/part-of: argocd
+    example: basic
+  name: example-argocd-cluster
+  namespace: argocd
+type: Opaque
