@@ -8,7 +8,7 @@
 * LivenessProbe y ReadinessProbe. Video demostrativo: https://youtu.be/KrVg8z8RMQg
 * ClusterAutoscaler. Video demostrativo: https://youtu.be/I1BwCSoAMe8
 * Deployment de la aplicación entera, con ArgoCD.
-
+ 
 ## Deployment:
 * Documentado en el directorio ArgoCD.
 
