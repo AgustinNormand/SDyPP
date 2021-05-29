@@ -3,6 +3,7 @@ name: Publisher
 on:
   push:
     paths:
+    - '!**'
     - 'TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/**'
 
 jobs:
