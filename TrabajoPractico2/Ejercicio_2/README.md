@@ -7,5 +7,5 @@
 * Rapidamente, realizar un depósito de 10000$ a la cuenta 1: SERVER_IP:8080/deposit/1/10000
 * Comprobar el saldo de la cuenta 1, el cual debería ser 10000: SERVER_IP:8080/balance/1
 
-* Video explicativo: https://youtu.be/SL48apnh2vU
+* Video explicativo: https://youtu.be/SL48apnh2vU  
 
