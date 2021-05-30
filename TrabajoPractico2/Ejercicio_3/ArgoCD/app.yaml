@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/AgustinNormand/SDyPP.git
     targetRevision: HEAD
-    path: TrabajoPractico2/Ejercicio_3/kustomize
+    path: TrabajoPractico2/Ejercicio_3/Kubernetes
     directory:
       recurse: true
   destination:

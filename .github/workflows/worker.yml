@@ -1,14 +1,14 @@
-name: Publisher
+name: Worker
 
 on:
   push:
     paths:
-    - 'TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/**'
-    - 'TrabajoPractico2/Ejercicio_3/Docker/Receptionist/**'
+    - 'TrabajoPractico2/Ejercicio_3/Codigo/Worker/**'
+    - 'TrabajoPractico2/Ejercicio_3/Docker/Worker/**'
 
 defaults:
   run:
-    working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Receptionist/
+    working-directory: TrabajoPractico2/Ejercicio_3/Codigo/Worker/
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
         run:
           mvn clean package --file pom.xml
       - name: Move jar to Dockerfile context
-        run: mv ./target/Receptionist-0.0.1-SNAPSHOT.jar ../../Docker/Receptionist/Receptionist.jar
+        run: mv ./target/Worker-0.0.1-SNAPSHOT.jar ../../Docker/Worker/Worker.jar
  
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -35,10 +35,10 @@ jobs:
       - name: build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./TrabajoPractico2/Ejercicio_3/Docker/Receptionist/
-          file: ./TrabajoPractico2/Ejercicio_3/Docker/Receptionist/Dockerfile
+          context: ./TrabajoPractico2/Ejercicio_3/Docker/Worker/
+          file: ./TrabajoPractico2/Ejercicio_3/Docker/Worker/Dockerfile
           push: true
-          tags: agustinnormand/tp2_ej3_receptionist:latest, agustinnormand/tp2_ej3_receptionist:${{ github.sha }}
+          tags: agustinnormand/tp2_ej3_worker:latest, agustinnormand/tp2_ej3_worker:${{ github.sha }}
         
   deploy:
     name: Deploy
@@ -59,7 +59,7 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
        cd ../../kustomize/
-       kustomize edit set image tp2_ej3_receptionist=$DOCKER_USERNAME/tp2_ej3_receptionist:$GITHUB_SHA
+       kustomize edit set image tp2_ej3_worker=$DOCKER_USERNAME/tp2_ej3_worker:$GITHUB_SHA
        cat kustomization.yaml
 
     - name: 'Kustomize Build'
