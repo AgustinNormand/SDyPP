@@ -56,8 +56,7 @@ jobs:
       with:
         kustomize-version: "3.6.1"
     
-    - name: ls
-      run: ls -R
+    
 
     - name: Update Kubernetes resources
       env:
@@ -65,14 +64,47 @@ jobs:
       run: |
        cd ../../Kubernetes/kustomize/
        kustomize edit set image tp2_ej3_receptionist=$DOCKER_USERNAME/tp2_ej3_receptionist:$GITHUB_SHA
-       cat kustomization.yaml
+      # cat kustomization.yaml
+
+    - name: 'Kustomize Build'
+        uses: karancode/kustomize-github-action@master
+        with:
+          kustomize_version: '3.0.0'
+          kustomize_build_dir: '.'
+          kustomize_comment: true
+          kustomize_output_file: "gitops/rendered.yaml"
+          kustomize_build_options: "--load_restrictor none"
+          enable_alpha_plugins: true
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
+    - name: ls
+      run: ls -R
         
-    - name: Commit files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -am "Bump docker tag"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Commit files
+    #   run: |
+    #     git config --local user.email "action@github.com"
+    #     git config --local user.name "GitHub Action"
+    #     git commit -am "Bump docker tag"
+    # - name: Push changes
+    #   uses: ad-m/github-push-action@master
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # kustomize:
+  #   name: 'Kustomize'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: 'Checkout'
+  #       uses: actions/checkout@master
+  #     - name: 'Kustomize Build'
+  #       uses: karancode/kustomize-github-action@master
+  #       with:
+  #         kustomize_version: '3.0.0'
+  #         kustomize_build_dir: '.'
+  #         kustomize_comment: true
+  #         kustomize_output_file: "gitops/rendered.yaml"
+  #         kustomize_build_options: "--load_restrictor none"
+  #         enable_alpha_plugins: true
+  #       env:
+  #         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
