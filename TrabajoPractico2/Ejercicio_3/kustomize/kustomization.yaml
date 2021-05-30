@@ -7,4 +7,4 @@ namespace: default
 images:
 - name: tp2_ej3_receptionist
   newName: agustinnormand/tp2_ej3_receptionist
-  newTag: ed4c83bfecda79c882e99478806b81f5805cd63c
+  newTag: 191ad19e0d35f8a3826977943934cc6be9453baf

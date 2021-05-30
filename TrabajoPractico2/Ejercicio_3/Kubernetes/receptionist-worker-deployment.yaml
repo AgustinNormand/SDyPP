@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receptionist
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: receptionist
+  template:
+    metadata:
+      labels:
+        role: receptionist
+    spec:
+      containers:
+      - image: agustinnormand/tp2_ej3_receptionist:191ad19e0d35f8a3826977943934cc6be9453baf
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          tcpSocket:
+            port: 9090
+        name: receptionist
+        ports:
+        - containerPort: 9090
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9090
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: worker
+  template:
+    metadata:
+      labels:
+        role: worker
+    spec:
+      containers:
+      - image: agustinnormand/tp2_ej3_worker:0.6
+        imagePullPolicy: IfNotPresent
+        name: worker
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 50m
+          requests:
+            cpu: 50m
