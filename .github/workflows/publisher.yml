@@ -78,16 +78,21 @@ jobs:
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
         
-    - name: Commit files
-      working-directory: 'TrabajoPractico2/Ejercicio_3/'
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -am "Bump docker tag"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+    - uses: EndBug/add-and-commit@v7
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        default_author: github_actions
+        path: './TrabajoPractico2/Ejercicio_3/'
+          
+    #- name: Commit files
+    #  working-directory: 'TrabajoPractico2/Ejercicio_3/'
+    #  run: |
+    #    git config --local user.email "action@github.com"
+    #    git config --local user.name "GitHub Action"
+    #    git commit -am "Bump docker tag"
+    #- name: Push changes
+    #  uses: ad-m/github-push-action@master
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
         
   # kustomize:
   #   name: 'Kustomize'
