@@ -70,7 +70,7 @@ jobs:
       uses: karancode/kustomize-github-action@master
       with:
         kustomize_version: '3.0.0'
-        kustomize_build_dir: '.'
+        kustomize_build_dir: './TrabajoPractico2/Ejercicio_3/kustomize/'
         kustomize_comment: true
         kustomize_output_file: "test.yaml"
         kustomize_build_options: "--load_restrictor none"
