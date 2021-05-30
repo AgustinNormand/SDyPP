@@ -72,13 +72,14 @@ jobs:
         kustomize_version: '3.0.0'
         kustomize_build_dir: './TrabajoPractico2/Ejercicio_3/kustomize/'
         kustomize_comment: true
-        kustomize_output_file: "test.yaml"
+        kustomize_output_file: "TrabajoPractico2/Ejercicio_3/Kubernetes/test.yaml"
         kustomize_build_options: "--load_restrictor none"
         enable_alpha_plugins: true
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 
     - name: ls
+      working-directory: 'TrabajoPractico2/Ejercicio_3/Kubernetes/'
       run: ls -R
         
     # - name: Commit files
