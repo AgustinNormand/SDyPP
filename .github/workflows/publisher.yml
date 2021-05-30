@@ -62,7 +62,7 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
-       cd ../../Kubernetes/kustomize/
+       cd ../../kustomize/
        kustomize edit set image tp2_ej3_receptionist=$DOCKER_USERNAME/tp2_ej3_receptionist:$GITHUB_SHA
       # cat kustomization.yaml
 
