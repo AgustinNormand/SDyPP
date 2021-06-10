@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+  rabbitmq-service:
+    image: rabbitmq:3-management-alpine
+    restart: unless-stopped
+    container_name: 'rabbitmq-service'
+    ports:
+      - 5672:5672
+      - 15672:15672
+      
+  redis-service:
+    image: redis:6.2.4-alpine
+    restart: unless-stopped
+    container_name: 'redis-service'
+    command: redis-server --requirepass password
+    ports:
+      - 6379:6379
+    
+    
+  server:
+    image: agustinnormand/tp2_eje4_server:0.7
+    restart: unless-stopped
+    container_name: server
+    ports:
+      - '8080:8080'
+    volumes:
+      - /usr/src/googleCredentials/:/usr/src/googleCredentials/
+    depends_on:
+      - rabbitmq-service
+      
+  workerSovel:
+    image: agustinnormand/tp2_eje4_worker_sovel:0.6
+    restart: unless-stopped
+    volumes:
+      - /usr/src/googleCredentials/:/usr/src/googleCredentials/
+    depends_on:
+      - redis-service
+      - rabbitmq-service
+  
+  workerSlicer:
+    image: agustinnormand/tp2_eje4_worker_slicer:0.6
+    restart: unless-stopped
+    volumes:
+      - /usr/src/googleCredentials/:/usr/src/googleCredentials/
+    depends_on:
+      - redis-service
+      - rabbitmq-service
+      
+  workerManager:
+    image: agustinnormand/tp2_eje4_worker_manager:0.6
+    restart: unless-stopped
+    depends_on:
+      - redis-service
+      - rabbitmq-service
