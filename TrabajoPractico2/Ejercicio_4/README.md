@@ -1,4 +1,5 @@
 ## DONE:
+* Version beta de procesamiento de imagen distribuido.
 * Servicio RabbitMQ levantado.
 * Servicio Redis levantado.
 *  Servicio "Server":
@@ -21,9 +22,13 @@
     * Elimina todas las partes y la imagen orinal de GCS.
     * Almacena la imagen ensamblada en GCS. (Cuando esto sucede, si el cliente, va a la url que le proporcionó el Server, se muestra la imagen procesada.)
 
-## TO-DO :
+## Example:
+* Video demostrativo: https://youtu.be/m4Rc9e0G2pk 
+
+## TO-DO:
 * No hacer auto-ack en los mensajes de RabbitMQ.
 * Refactorizar el codigo, hay cosas desprolijas.
+* Mejorar como mostrar la imagen resultado, o en su defecto, mejorar la url que se genera para consultar la imagen resultado.
 * El numero de partes en las que el slicer corta la imagen debería poder parametrizarse.
 * Actualmente muestra las imagenes resultado en formate png, dado que con otra extension, no funciona.
 * El sobel tiene algunos errores, la imagen resultado no está muy limpia.
