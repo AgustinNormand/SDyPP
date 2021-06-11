@@ -5,21 +5,23 @@ import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.awt.*;
+import java.awt.image.RenderedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.BufferedImage;
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
-
-import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 
 @SpringBootApplication
 public class Assembler {
@@ -30,14 +32,16 @@ public class Assembler {
 
 	private RabbitTemplate rabbitTemplate;
 	private Storage storage;
+	private AmqpAdmin amqpAdmin;
 
 	@Autowired
-	public Assembler(RabbitTemplate rabbitTemplate, Storage storage) {
+	public Assembler(RabbitTemplate rabbitTemplate, Storage storage, AmqpAdmin amqpAdmin) {
 		this.rabbitTemplate = rabbitTemplate;
 		this.storage = storage;
-		loopProcessing();
+		this.amqpAdmin = amqpAdmin;
 	}
 
+	@PostConstruct
 	private void loopProcessing(){
 		while(true){
 			Message message = rabbitTemplate.receive("assemblyJobs");
@@ -45,6 +49,12 @@ public class Assembler {
 				processMessage(message);
 			}
 		}
+	}
+
+	public void createQueues() {
+		amqpAdmin.declareQueue(new Queue("sliceJobs", true));
+		amqpAdmin.declareQueue(new Queue("sobelJobs", true));
+		amqpAdmin.declareQueue(new Queue("assemblyJobs", true));
 	}
 
 	private void processMessage(Message message) {
@@ -64,30 +74,46 @@ public class Assembler {
 	}
 
 	private void assembleParts(List partsNames, String storageImageName) {
-		System.out.println("Entered assembleParts");
 		ArrayList<BufferedImage> images = getImages(partsNames);
 		BufferedImage originalImage = getImage(storageImageName);
-		System.out.println("All images pulled");
-		String extension = getExtension(storageImageName);
+		//String extension = getExtension(storageImageName);
 		String filePath = "/home/agustin/Desktop/Distribuidos/Repo_Propio/TrabajoPractico2/Ejercicio_4/Codigo/Assembler/";
-		int heightTotal = 0;
-		for(BufferedImage bi : images){
-			heightTotal += bi.getHeight();
+		BufferedImage result = joinParts(images, originalImage.getWidth(), originalImage.getHeight());
+		try {
+			byte[] data = toByteArray(result, "png");
+			storeInBucket("finished"+storageImageName, data);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
 
-		BufferedImage result = new BufferedImage(images.get(5).getWidth(), heightTotal, BufferedImage.TYPE_INT_ARGB);
+
+	private BufferedImage joinParts(ArrayList<BufferedImage> images, int width, int height) {
+		BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = result.createGraphics();
-		int heightCurr = 0;
-			try {
-				for(BufferedImage bi : images){
-					g2d.drawImage(bi, 0, heightCurr, null);
-					heightCurr += bi.getHeight();
-				}
-				g2d.dispose();
-				ImageIO.write(result, "jpeg", new File(filePath+"test"));
-			} catch (Exception e) {
-				e.printStackTrace();
+		int x = 0;
+		int cantidadFotosFilaTotales = width / images.get(0).getWidth();
+		int cantidadFotosFilaActuales = 0;
+		int currentHeight = 0;
+		int currentWidth = 0;
+		for(BufferedImage part : images){
+			if(cantidadFotosFilaActuales == cantidadFotosFilaTotales){
+				currentHeight = currentHeight+part.getHeight();
+				currentWidth = 0;
+				cantidadFotosFilaActuales = 0;
 			}
+			g2d.drawImage(part, currentWidth, currentHeight, null);
+			cantidadFotosFilaActuales++;
+			currentWidth += part.getWidth();
+		}
+		g2d.dispose();
+		return result;
+	}
+
+	public String storeInBucket(String blobName, byte[] data){
+		Bucket bucket = storage.get("sdypp-316414");
+		Blob blob = bucket.create(blobName, data);
+		return blob.getName().toString();
 	}
 
 	private BufferedImage getImage(String storageImageName) {
@@ -130,24 +156,4 @@ public class Assembler {
 		return bytes;
 
 	}
-
-	public BufferedImage joinBufferedImage(BufferedImage img1,
-										   BufferedImage img2) {
-		int offset = 2;
-		int width = img1.getWidth() + img2.getWidth() + offset;
-		int height = Math.max(img1.getHeight(), img2.getHeight()) + offset;
-		BufferedImage newImage = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = newImage.createGraphics();
-		Color oldColor = g2.getColor();
-		g2.setPaint(Color.BLACK);
-		g2.fillRect(0, 0, width, height);
-		g2.setColor(oldColor);
-		g2.drawImage(img1, null, 0, 0);
-		g2.drawImage(img2, null, img1.getWidth() + offset, 0);
-		g2.dispose();
-		return newImage;
-	}
-
-
 }

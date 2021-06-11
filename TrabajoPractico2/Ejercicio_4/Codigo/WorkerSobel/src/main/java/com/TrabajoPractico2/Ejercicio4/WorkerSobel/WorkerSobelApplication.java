@@ -4,13 +4,13 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import org.json.JSONObject;
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import javax.imageio.ImageIO;
@@ -29,17 +29,22 @@ public class WorkerSobelApplication {
  	private Storage storage;
  	private RedisHandler rh;
 
-	@Bean
-	public Queue myQueue() {
-		return new Queue("sobelJobs", false);
-	}
+	private AmqpAdmin amqpAdmin;
 
 	@Autowired
-	public WorkerSobelApplication(RabbitTemplate rabbitTemplate, Storage storage, Environment env) {
+	public WorkerSobelApplication(RabbitTemplate rabbitTemplate, Storage storage, Environment env, AmqpAdmin amqpAdmin) {
 		this.rabbitTemplate = rabbitTemplate;
 		this.storage = storage;
 		this.rh = new RedisHandler(env);
+		this.amqpAdmin = amqpAdmin;
+		createQueues();
 		loopProcessing();
+	}
+
+	public void createQueues() {
+		amqpAdmin.declareQueue(new Queue("sliceJobs", true));
+		amqpAdmin.declareQueue(new Queue("sobelJobs", true));
+		amqpAdmin.declareQueue(new Queue("assemblyJobs", true));
 	}
 
 	private void loopProcessing(){
@@ -66,8 +71,9 @@ public class WorkerSobelApplication {
 		String partBlobName = obj.get("partBlobName").toString();
 		String originalBlobName = obj.get("originalBlobName").toString();
 		BufferedImage image = toBufferedImage(getFromBucket(partBlobName));
+		BufferedImage proccesedImage = Sobel.applySobel(image);
 		String extension = getExtension(partBlobName);
-		storeInBucket("finished"+partBlobName, toByteArray(image, extension));
+		storeInBucket("finished"+partBlobName, toByteArray(proccesedImage, extension));
 		rh.increment(originalBlobName);
 	}
 

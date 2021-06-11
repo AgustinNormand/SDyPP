@@ -18,7 +18,7 @@ services:
     
     
   server:
-    image: agustinnormand/tp2_eje4_server:0.7
+    image: agustinnormand/tp2_eje4_server:0.9
     restart: unless-stopped
     container_name: server
     ports:
@@ -29,7 +29,7 @@ services:
       - rabbitmq-service
       
   workerSovel:
-    image: agustinnormand/tp2_eje4_worker_sovel:0.6
+    image: agustinnormand/tp2_eje4_worker_sovel:0.9
     restart: unless-stopped
     volumes:
       - /usr/src/googleCredentials/:/usr/src/googleCredentials/
@@ -38,7 +38,7 @@ services:
       - rabbitmq-service
   
   workerSlicer:
-    image: agustinnormand/tp2_eje4_worker_slicer:0.6
+    image: agustinnormand/tp2_eje4_worker_slicer:0.9
     restart: unless-stopped
     volumes:
       - /usr/src/googleCredentials/:/usr/src/googleCredentials/
@@ -47,8 +47,16 @@ services:
       - rabbitmq-service
       
   workerManager:
-    image: agustinnormand/tp2_eje4_worker_manager:0.6
+    image: agustinnormand/tp2_eje4_worker_manager:0.9
     restart: unless-stopped
     depends_on:
       - redis-service
+      - rabbitmq-service
+
+  workerAssembler:
+    image: agustinnormand/tp2_eje4_worker_assembler:0.9
+    restart: unless-stopped
+    volumes:
+      - /usr/src/googleCredentials/:/usr/src/googleCredentials/
+    depends_on:
       - rabbitmq-service

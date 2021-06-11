@@ -1,6 +1,7 @@
 package com.TrabajoPractico2.Ejercicio4.Servidor;
 
 import org.json.JSONObject;
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,20 @@ public class Manager {
 
 	private RabbitTemplate rabbitTemplate;
 	private RedisHandler rh;
-
-	@Bean
-	public Queue assemblyJobsQueue() {
-		return new Queue("assemblyJobs", false);
-	}
+	private AmqpAdmin amqpAdmin;
 
 	@Autowired
-	public Manager(RabbitTemplate rabbitTemplate, Environment env) {
+	public Manager(RabbitTemplate rabbitTemplate, Environment env, AmqpAdmin amqpAdmin) {
 		this.rabbitTemplate = rabbitTemplate;
 		this.rh = new RedisHandler(env);
+		this.amqpAdmin = amqpAdmin;
 		loopProcessing();
+	}
+
+	public void createQueues() {
+		amqpAdmin.declareQueue(new Queue("sliceJobs", true));
+		amqpAdmin.declareQueue(new Queue("sobelJobs", true));
+		amqpAdmin.declareQueue(new Queue("assemblyJobs", true));
 	}
 
 	private void loopProcessing(){

@@ -35,16 +35,6 @@ public class Slicer {
 	private RedisHandler rh;
 	private AmqpAdmin amqpAdmin;
 
-	@Bean
-	public Queue sliceQueue() {
-		return new Queue("sliceJobs", false);
-	}
-
-	@Bean
-	public Queue sobelQueue() {
-		return new Queue("sobelJobs", false);
-	}
-
 	@Autowired
 	public Slicer(RabbitTemplate rabbitTemplate, Storage storage, Environment env, AmqpAdmin amqpAdmin) {
 		this.rabbitTemplate = rabbitTemplate;
@@ -141,16 +131,49 @@ public class Slicer {
 		ArrayList<BufferedImage> buffer = new ArrayList<>();
 		ArrayList<BufferedImage> secondBuffer;
 		buffer.add(source);
-		for(int i = 0; i < sliceCount; i++){
+		for(int i = 0; i < sliceCount; i++) {
 			secondBuffer = new ArrayList<>();
-			for(BufferedImage part : buffer){
+			for (BufferedImage part : buffer) {
 				secondBuffer.addAll(splitInFour(part));
 			}
 			buffer = new ArrayList<>();
 			buffer.addAll(secondBuffer);
+
+		}
+		result = acomodarPartes(buffer, sliceCount);
+		return result;
+	}
+
+	private ArrayList<BufferedImage> acomodarPartes(ArrayList<BufferedImage> parts, int sliceCount) {
+		ArrayList<BufferedImage> result = new ArrayList<>();
+		ArrayList<BufferedImage> buffer = new ArrayList<>();
+		int elementosFila = (int) Math.pow(2, sliceCount);
+		int elementosFilaActuales = 0;
+		while(!parts.isEmpty()){
+			tomar2(result, parts);
+			buferear2(buffer, parts);
+			elementosFilaActuales = elementosFilaActuales + 2;
+			if(elementosFilaActuales == elementosFila){
+				result.addAll(buffer);
+				buffer.clear();
+			}
 		}
 		result.addAll(buffer);
 		return result;
+	}
+
+	private void buferear2(ArrayList<BufferedImage> buffer, ArrayList<BufferedImage> parts) {
+		buffer.add(parts.get(0));
+		parts.remove(0);
+		buffer.add(parts.get(0));
+		parts.remove(0);
+	}
+
+	private void tomar2(ArrayList<BufferedImage> result, ArrayList<BufferedImage> parts) {
+		result.add(parts.get(0));
+		parts.remove(0);
+		result.add(parts.get(0));
+		parts.remove(0);
 	}
 
 	public ArrayList<BufferedImage> splitInFour(BufferedImage source){
