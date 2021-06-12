@@ -23,7 +23,7 @@
     * Almacena la imagen ensamblada en GCS. (Cuando esto sucede, si el cliente, va a la url que le proporcionó el Server, se muestra la imagen procesada.)
 
 ## Example:
-* Video demostrativo: https://youtu.be/m4Rc9e0G2pk 
+* Video demostrativo: https://youtu.be/CsOwRUtd2Po
 
 ## TO-DO:
 * No hacer auto-ack en los mensajes de RabbitMQ.
