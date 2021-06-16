@@ -26,6 +26,7 @@
 * Video demostrativo: https://youtu.be/CsOwRUtd2Po
 
 ## TO-DO:
+* Hacer el server multi threading
 * No hacer auto-ack en los mensajes de RabbitMQ.
 * Refactorizar el codigo, hay cosas desprolijas.
 * Mejorar como mostrar la imagen resultado, o en su defecto, mejorar la url que se genera para consultar la imagen resultado.
