@@ -2,8 +2,10 @@
 
 <p align="center">
 Repositorio destinado para la entrega de los trabajos de la materia SDyPP.
-  TP Integrador: https://github.com/AgustinNormand/SDyPP_TPI
 </p>
+
+<p align="center">TP Integrador: https://github.com/AgustinNormand/SDyPP_TPI</p>
+
 
 
 
